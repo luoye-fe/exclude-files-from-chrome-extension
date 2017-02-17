@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "exclude-files-from-chrome-extension",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "exclude files from chrome extension, simple your network.",
+    "description": "The description of the application"
+  }
+}
