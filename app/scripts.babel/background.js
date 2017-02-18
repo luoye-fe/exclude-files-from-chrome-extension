@@ -1,26 +1,11 @@
-chrome.webRequest.onBeforeRequest.addListener(
-    // function(details) {
-    //     var currentTime = new Date();
-    //     if (isOfficeTime(currentTime) && isWeekday(currentTime)) {
-    //         return { redirectUrl: chrome.extension.getURL('index.html') };
-    //     }
-    //     return details.url;
-    // }, {
-    //     urls: [
-    //         '*://*.facebook.com/*',
-    //         '*://*.twitter.com/*',
-    //         '*://*.gmail.com/*',
-    //     ],
-    //     types: ['main_frame', 'sub_frame', 'stylesheet', 'script', 'image', 'object', 'xmlhttprequest', 'other']
-    // }, ['blocking']
-);
-
-// function isOfficeTime(currentTime) {
-//     var hour = currentTime.getHours();
-//     return hour > 9 && hour < 18;
-// }
-
-// function isWeekday(currentTime) {
-//     var dayOfWeek = currentTime.getDay();
-//     return dayOfWeek >= 1 && dayOfWeek <= 5;
-// }
+var ports = [];
+chrome.runtime.onConnect.addListener(function(port) {
+	if (port.name !== 'devtools') return;
+	ports.push(port);
+	port.onDisconnect.addListener(function() {
+		var i = ports.indexOf(port);
+		if (i !== -1) {
+			ports.splice(i, 1)
+		};
+	});
+});
